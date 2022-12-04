@@ -1,6 +1,6 @@
 {
-    "name": "myshop",
-    "short_name": "myshop",
+    "name": "lab2_myshop",
+    "short_name": "lab2_myshop",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

@@ -1,4 +1,4 @@
-# myshop
+# lab2_myshop
 
 A new Flutter project.
 

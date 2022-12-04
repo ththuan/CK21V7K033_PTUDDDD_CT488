@@ -1,6 +1,13 @@
+//import 'dart:html';
+
 import 'package:flutter/material.dart';
 
+import '../cart/cart_screen.dart';
 import 'products_grid.dart';
+import '../shared/app_drawer.dart';
+
+import '../cart/cart_manager.dart';
+import 'top_right_badge.dart';
 
 enum FilterOptions { favorites, all }
 
@@ -12,10 +19,20 @@ class ProductsOverviewScreen extends StatefulWidget {
 }
 
 class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
-  var _showOnlyFavaorites = false;
+  var _showOnlyFavorites = false;
 
   @override
   Widget build(BuildContext context) {
+    // return Scaffold(
+    //   appBar: AppBar(
+    //     title: const Text('MyShop'),
+    //     actions: <Widget>[
+    //       buildProductFilterMenu(),
+    //       buildShoppingCartIcon(),
+    //     ],
+    //   ),
+    //   body: ProductsGrid(_showOnlyFavaorites),
+    // );
     return Scaffold(
       appBar: AppBar(
         title: const Text('MyShop'),
@@ -24,18 +41,36 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
           buildShoppingCartIcon(),
         ],
       ),
-      body: ProductsGrid(_showOnlyFavaorites),
+      drawer: const AppDrawer(),
+      body: ProductsGrid(_showOnlyFavorites),
     );
   }
 
+  // Widget buildShoppingCartIcon() {
+  //   return IconButton(
+  //     icon: const Icon(
+  //       Icons.shopping_cart,
+  //     ),
+  //     // onPressed: () {
+  //     //   print('Go to cart screen');
+  //     // });
+  //     onPressed: () {
+  //       Navigator.of(context).pushNamed(CartScreen.routeName);
+  //     },
+  //   );
+  // }
   Widget buildShoppingCartIcon() {
-    return IconButton(
+    return TopRightBadge(
+      data: CartManager().productCount,
+      child: IconButton(
         icon: const Icon(
           Icons.shopping_cart,
         ),
         onPressed: () {
-          print('Go to cart screen');
-        });
+          Navigator.of(context).pushNamed(CartScreen.routeName);
+        },
+      ),
+    );
   }
 
   Widget buildProductFilterMenu() {
@@ -43,9 +78,9 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
       onSelected: (FilterOptions selectedValue) {
         setState(() {
           if (selectedValue == FilterOptions.favorites) {
-            _showOnlyFavaorites = true;
+            _showOnlyFavorites = true;
           } else {
-            _showOnlyFavaorites = false;
+            _showOnlyFavorites = false;
           }
         });
       },
