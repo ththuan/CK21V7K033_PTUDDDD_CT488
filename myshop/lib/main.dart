@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:lab2_myshop/ui/cart/cart_manager.dart';
-import 'package:lab2_myshop/ui/orders/orders_manager.dart';
-import 'package:lab2_myshop/ui/products/edit_product_screen.dart';
+import 'package:myshop/ui/cart/cart_manager.dart';
+import 'package:myshop/ui/orders/orders_manager.dart';
+import 'package:myshop/ui/products/edit_product_screen.dart';
 import 'ui/products/products_manager.dart';
 import 'ui/products/product_detail_screen.dart';
 import 'ui/products/products_overview_screen.dart';
