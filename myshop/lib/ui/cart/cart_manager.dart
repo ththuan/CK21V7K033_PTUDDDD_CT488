@@ -1,7 +1,10 @@
-import '../../models/cart_item.dart';
+import 'package:flutter/cupertino.dart';
 
-class CartManager {
-  final Map<String, CartItem> _items = {
+import '../../models/cart_item.dart';
+import '../../models/product.dart';
+
+class CartManager with ChangeNotifier {
+  Map<String, CartItem> _items = {
     'p1': CartItem(
       id: 'c1',
       title: 'Red Shirt',
@@ -28,5 +31,58 @@ class CartManager {
       total += cartItem.price * cartItem.quantity;
     });
     return total;
+  }
+
+//Them Item
+  void addItem(Product product) {
+    if (_items.containsKey(product.id)) {
+      //Change quantity...
+      _items.update(
+        product.id!,
+        (existingCartItem) => existingCartItem.copyWith(
+          quantity: existingCartItem.quantity + 1,
+        ),
+      );
+    } else {
+      _items.putIfAbsent(
+        product.id!,
+        () => CartItem(
+          id: 'c${DateTime.now().toIso8601String()}',
+          title: product.title,
+          price: product.price,
+          quantity: 1,
+        ),
+      );
+    }
+    notifyListeners();
+  }
+
+//Xoa Item
+  void removeItem(String productId) {
+    _items.remove(productId);
+    notifyListeners();
+  }
+
+  void removeSingleItem(String productId) {
+    if (!_items.containsKey(productId)) {
+      return;
+    }
+    if (_items[productId]?.quantity as num > 1) {
+      _items.update(
+        productId,
+        (existingCartItem) => existingCartItem.copyWith(
+          quantity: existingCartItem.quantity - 1,
+        ),
+      );
+    } else {
+      _items.remove(productId);
+    }
+    notifyListeners();
+  }
+
+//Xoa trang
+  void clear() {
+    _items = {};
+    notifyListeners();
   }
 }
